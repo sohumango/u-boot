@@ -505,11 +505,11 @@ static int fs_read_lmb_check(const char *filename, ulong addr, loff_t offset,
 		read_len = len;
 
 	lmb_init_and_reserve(&lmb, gd->bd, (void *)gd->fdt_blob);
-	lmb_dump_all(&lmb);
+	lmb_dump_all_force(&lmb);
 
 	if (lmb_alloc_addr(&lmb, addr, read_len) == addr)
 		return 0;
-
+  log_err("wang: addr=%lu, read_len=%d \n", addr, read_len);
 	log_err("** Reading file would overwrite reserved memory **\n");
 	return -ENOSPC;
 }
